@@ -21,11 +21,11 @@
     }
   ],
   "env": {
-    "VITE_API_URL": "@vite_api_url"
+    "VITE_API_URL": "https://store-rating-backend-sweo.onrender.com/api"
   },
   "build": {
     "env": {
-      "VITE_API_URL": "@vite_api_url"
+      "VITE_API_URL": "https://store-rating-backend-sweo.onrender.com/api"
     }
   }
 }
