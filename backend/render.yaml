@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: store-rating-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        sync: false
+    healthCheckPath: /api/health
+    disk:
+      name: data
+      mountPath: /opt/render/project/data
+      sizeGB: 1
