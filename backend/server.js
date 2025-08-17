@@ -13,6 +13,7 @@ const corsOptions = {
   origin: process.env.CORS_ORIGIN || [
     'http://localhost:5173',
     'http://localhost:3000',
+    'https://store-rating-app-inc.vercel.app',
     /\.vercel\.app$/
   ],
   credentials: true,

@@ -15,7 +15,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: CORS_ORIGIN
-        value: https://store-rating-backend-sweo.onrender.com
+        value: https://store-rating-app-inc.vercel.app
     healthCheckPath: /api/health
     disk:
       name: data
