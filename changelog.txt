@@ -1,0 +1,75 @@
+# Development Changelog - Store Rating Platform
+
+## August 15, 2024
+- Started the project after getting frustrated with existing platforms
+- Set up basic project structure (frontend/backend folders)
+- Initialized React with Vite - much faster than CRA!
+- Created Express server boilerplate
+
+## August 16, 2024
+- Spent 3 hours trying to connect to NeonDB
+- Kept getting timeout errors, finally figured out the connection string format
+- Created database schema for users, stores, ratings
+- Got basic authentication working after debugging JWT middleware
+
+## August 17, 2024
+- Built user registration and login endpoints
+- Added password hashing with bcrypt
+- Created protected route middleware
+- Started working on frontend auth context
+
+## August 18, 2024
+- Implemented store CRUD operations
+- Rating system was trickier than expected
+- Had to figure out SQL aggregation for average ratings
+- Created basic React components for login/signup
+
+## August 19, 2024
+- Weekend coding session!
+- Built the admin dashboard - took forever to get the user table working
+- Pagination math confused me initially but got it sorted
+- Added Tailwind CSS with custom theme colors
+
+## August 20, 2024
+- More weekend work
+- Created store owner dashboard
+- Rating analytics were complex - multiple JOIN queries
+- Fixed several bugs in the rating calculation logic
+
+## August 21, 2024
+- Back to work after coffee break
+- Built the user store browsing page
+- Search and filter functionality took longer than expected
+- Star rating component was surprisingly difficult to get right
+
+## August 22, 2024
+- Fixed major bug: rating bars weren't showing proportionally
+- Problem was calculating percentages wrong on backend
+- Moved calculation to frontend and it works perfectly now
+- Added proper error handling throughout the app
+
+## August 23, 2024
+- Solved infinite rerendering issue in admin dashboard
+- useEffect dependencies were causing the problem
+- Added loading states and better UX
+- Fixed button visibility issues (wrong Tailwind classes)
+
+## August 24, 2024
+- Final polish and testing
+- Added responsive design improvements
+- Fixed mobile layout issues
+- Cleaned up console.log statements (well, most of them)
+
+## August 25, 2024
+- Last minute fixes before submission
+- Added this changelog for documentation
+- Everything working smoothly now!
+- Ready to show to recruiters 🎉
+
+---
+
+Total development time: ~40 hours over 10 days
+Coffee consumed: Too much to count ☕
+Stack Overflow visits: Countless
+Moments of frustration: Many
+Moments of satisfaction: Worth it!
