@@ -11,6 +11,12 @@ A full-stack store rating platform where:
 - **Store Owners** can manage their stores and respond to reviews  
 - **Admins** can oversee everything and manage users/stores
 
+## 🚀 Quick Start
+
+**Try the live application**: https://store-rating-app-inc.vercel.app/
+
+Use the [test accounts](#test-accounts) below to explore different user roles and features without setting up anything locally.
+
 ## Tech Stack
 
 - **Frontend**: React + Vite (love the fast refresh!)
@@ -18,6 +24,7 @@ A full-stack store rating platform where:
 - **Database**: NeonDB (PostgreSQL) - took me forever to get this working
 - **Styling**: Tailwind CSS 3.4.17 with custom theme
 - **Authentication**: JWT tokens
+- **Deployment**: Vercel (Frontend) + Render (Backend)
 
 ## My Build Process
 
@@ -74,7 +81,7 @@ A full-stack store rating platform where:
    npm run setup
    ```
 
-### Backend Setup
+### Backend Setup (Development)
 
 1. Navigate to the backend directory:
 ```bash
@@ -86,7 +93,7 @@ cd backend
 npm install
 ```
 
-3. Update the `.env` file with your NeonDB connection string:
+3. Create a `.env` file based on `.env.example` and update with your NeonDB connection string:
 ```env
 # Database Configuration
 # Replace with your actual NeonDB connection string
@@ -100,6 +107,9 @@ JWT_EXPIRES_IN=24h
 # Server Configuration
 PORT=5000
 NODE_ENV=development
+
+# CORS Configuration (for development)
+CORS_ORIGIN=http://localhost:5173
 ```
 
 4. Start the backend server:
@@ -109,7 +119,9 @@ npm run dev
 
 The backend will run on `http://localhost:5000`
 
-### Frontend Setup
+**Note**: For production deployment, see the [Deployment](#deployment) section below.
+
+### Frontend Setup (Development)
 
 1. Navigate to the frontend directory:
 ```bash
@@ -121,16 +133,42 @@ cd frontend
 npm install
 ```
 
-3. Start the development server:
+3. Create a `.env.local` file for development (optional):
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+4. Start the development server:
 ```bash
 npm run dev
 ```
 
 The frontend will run on `http://localhost:5173`
 
-## Default Admin Account
+**Note**: For production deployment, see the [Deployment](#deployment) section below.
 
-The database schema includes a default admin account:
+## Test Accounts
+
+### Live Application Test Accounts
+You can test the live application at https://store-rating-app-inc.vercel.app/ using these accounts:
+
+**Admin Account**:
+- **Email**: admin@storerating.com
+- **Password**: Admin123!
+- **Access**: Full admin dashboard, user management, store management
+
+**Store Owner Account**:
+- **Email**: owner@teststore.com
+- **Password**: Owner123!
+- **Access**: Store management, rating analytics, owner dashboard
+
+**Regular User Account**:
+- **Email**: user@test.com
+- **Password**: User123!
+- **Access**: Browse stores, submit ratings, user profile
+
+### Default Admin Account (Development)
+The database schema includes a default admin account for development:
 - **Email**: admin@storerating.com
 - **Password**: Admin123!
 
@@ -244,15 +282,94 @@ cd frontend && npm run build
 
 ## Deployment
 
-### Backend Deployment
-- Set environment variables on your hosting platform
-- Ensure MySQL database is accessible
-- Set `NODE_ENV=production`
+### Live Application
+- **Frontend**: https://store-rating-app-inc.vercel.app/
+- **Backend**: https://store-rating-backend-sweo.onrender.com
+- **Database**: NeonDB (PostgreSQL)
 
-### Frontend Deployment
-- Build the project: `npm run build`
-- Deploy the `dist` folder to your hosting platform
-- Update API base URL if needed
+### Backend Deployment (Render)
+
+1. **Create NeonDB Database**:
+   - Go to [https://neon.tech](https://neon.tech) and create a free account
+   - Create a new project and database
+   - Copy the connection string (format: `postgresql://username:password@host/database?sslmode=require`)
+
+2. **Deploy to Render**:
+   - Connect your GitHub repository to Render
+   - Create a new Web Service
+   - Set build command: `cd backend && npm install`
+   - Set start command: `cd backend && npm start`
+   - Configure the following environment variables:
+
+   ```env
+   DATABASE_URL=your_neondb_connection_string
+   JWT_SECRET=your_secure_128_character_jwt_secret
+   NODE_ENV=production
+   PORT=10000
+   CORS_ORIGIN=https://store-rating-app-inc.vercel.app
+   ```
+
+3. **Generate JWT Secret**:
+   ```bash
+   node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+   ```
+
+### Frontend Deployment (Vercel)
+
+1. **Deploy to Vercel**:
+   - Connect your GitHub repository to Vercel
+   - Set root directory to `frontend`
+   - Vercel will automatically detect Vite configuration
+   - The `vercel.json` file is pre-configured with the production API URL
+
+2. **Configuration Files**:
+   - `frontend/vercel.json` - Contains deployment settings and environment variables
+   - `frontend/.env.production` - Production environment configuration
+
+### Environment Variables Reference
+
+#### Backend (Render)
+| Variable | Description | Example |
+|----------|-------------|----------|
+| `DATABASE_URL` | NeonDB connection string | `postgresql://user:pass@host/db?sslmode=require` |
+| `JWT_SECRET` | 128-character secret for JWT tokens | Generated using crypto.randomBytes(64) |
+| `NODE_ENV` | Environment mode | `production` |
+| `PORT` | Server port | `10000` |
+| `CORS_ORIGIN` | Frontend URL for CORS | `https://store-rating-app-inc.vercel.app` |
+
+#### Frontend (Vercel)
+| Variable | Description | Value |
+|----------|-------------|-------|
+| `VITE_API_URL` | Backend API endpoint | `https://store-rating-backend-sweo.onrender.com/api` |
+
+### Post-Deployment Verification
+
+1. **Backend Health Check**:
+   ```bash
+   curl https://store-rating-backend-sweo.onrender.com/health
+   ```
+
+2. **Frontend Verification**:
+   - Visit https://store-rating-app-inc.vercel.app/
+   - Test user registration and login
+   - Verify API connectivity
+
+3. **Database Connection**:
+   - Backend logs should show successful database connection
+   - Database schema is automatically set up on first connection
+
+### Deployment Files
+
+- `backend/render.yaml` - Render deployment configuration
+- `frontend/vercel.json` - Vercel deployment configuration
+- `DEPLOYMENT.md` - Detailed deployment documentation
+
+### Troubleshooting
+
+- **CORS Issues**: Ensure `CORS_ORIGIN` matches your frontend URL exactly
+- **Database Connection**: Verify NeonDB connection string format and SSL requirement
+- **Environment Variables**: Check all required variables are set in hosting platform
+- **Build Failures**: Review build logs for missing dependencies or configuration errors
 
 ## Contributing
 
